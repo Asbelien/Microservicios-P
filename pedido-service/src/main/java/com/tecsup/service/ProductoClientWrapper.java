@@ -13,8 +13,8 @@ public class ProductoClientWrapper {
     @Autowired
     private ProductoClient productoClient;
 
-    @Retry(name = "productoRetry")
-    @CircuitBreaker(name = "productoService", fallbackMethod = "productoFallback")
+    @Retry(name = "productoRetry", fallbackMethod = "productoFallback")
+    @CircuitBreaker(name = "productoService")
     public ProductoDTO obtenerProductoConFallback(Long id) {
         System.out.println("Llamando a producto-service...");
         return productoClient.obtenerProducto(id);

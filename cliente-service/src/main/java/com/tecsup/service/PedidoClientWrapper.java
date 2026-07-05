@@ -16,8 +16,8 @@ public class PedidoClientWrapper {
     @Autowired
     private PedidoClient pedidoClient;
 
-    @Retry(name = "pedidoRetry")
-    @CircuitBreaker(name = "pedidoService", fallbackMethod = "pedidosFallback")
+    @Retry(name = "pedidoRetry", fallbackMethod = "pedidosFallback")
+    @CircuitBreaker(name = "pedidoService")
     public List<PedidoDTO> obtenerPedidosConFallback() {
         System.out.println("Llamando a pedido-service...");
         return pedidoClient.obtenerTodosLosPedidos();

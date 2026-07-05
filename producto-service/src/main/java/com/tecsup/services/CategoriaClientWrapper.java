@@ -13,8 +13,8 @@ public class CategoriaClientWrapper {
     @Autowired
     private CategoriaClient categoriaClient;
 
-    @Retry(name = "categoriaRetry")
-    @CircuitBreaker(name = "categoriaService", fallbackMethod = "categoriaFallback")
+    @Retry(name = "categoriaRetry", fallbackMethod = "categoriaFallback")
+    @CircuitBreaker(name = "categoriaService")
     public CategoriaDTO obtenerCategoriaConFallback(Long categoriaId) {
         System.out.println("Llamando a categoria-service...");
         return categoriaClient.obtenerCategoria(categoriaId);
