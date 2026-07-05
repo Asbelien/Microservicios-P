@@ -1,5 +1,6 @@
 package com.tecsup.service;
 
+import com.tecsup.dto.ProductoDTO;
 import com.tecsup.entity.Pedido;
 import com.tecsup.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,9 @@ public class PedidoServiceImpl implements PedidoService {
 
     @Autowired
     private PedidoRepository pedidoRepository;
+
+    @Autowired
+    private ProductoClientWrapper productoClientWrapper;
 
     @Override
     public List<Pedido> findAll() {
@@ -44,5 +48,9 @@ public class PedidoServiceImpl implements PedidoService {
     @Override
     public void delete(Long id) {
         pedidoRepository.deleteById(id);
+    }
+
+    public ProductoDTO consultarProducto(Long productoId) {
+        return productoClientWrapper.obtenerProductoConFallback(productoId);
     }
 }

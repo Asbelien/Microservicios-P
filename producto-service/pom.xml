@@ -21,7 +21,6 @@
     <name>producto-service</name>
     <description>Microservicio producto</description>
 
-    <!-- Versiones -->
     <properties>
         <java.version>17</java.version>
         <spring-cloud.version>
@@ -29,7 +28,6 @@
         </spring-cloud.version>
     </properties>
 
-    <!-- Spring Cloud -->
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -47,7 +45,6 @@
     </dependencyManagement>
 
     <dependencies>
-        <!-- REST API -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>
@@ -55,7 +52,6 @@
             </artifactId>
         </dependency>
 
-        <!-- JPA -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>
@@ -63,7 +59,6 @@
             </artifactId>
         </dependency>
 
-        <!-- Validation DTO -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>
@@ -71,7 +66,6 @@
             </artifactId>
         </dependency>
 
-        <!-- MySQL -->
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>
@@ -80,7 +74,6 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- Eureka Client -->
         <dependency>
             <groupId>
                 org.springframework.cloud
@@ -90,7 +83,6 @@
             </artifactId>
         </dependency>
 
-        <!-- Lombok -->
         <dependency>
             <groupId>
                 org.projectlombok
@@ -101,7 +93,6 @@
             <optional>true</optional>
         </dependency>
 
-        <!-- Test -->
         <dependency>
             <groupId>
                 org.springframework.boot
@@ -112,15 +103,23 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Agregar Feign a producto-service -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>
                 spring-cloud-starter-openfeign
             </artifactId>
-
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
+
+        <!-- Resilience4j Circuit Breaker -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
+        </dependency>
 
     </dependencies>
 

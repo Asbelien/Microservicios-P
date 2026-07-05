@@ -1,5 +1,6 @@
 package com.tecsup.controller;
 
+import com.tecsup.dto.ProductoDTO;
 import com.tecsup.entity.Pedido;
 import com.tecsup.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,5 +50,10 @@ public class PedidoController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         pedidoService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/producto/{productoId}")
+    public ResponseEntity<ProductoDTO> consultarProducto(@PathVariable Long productoId) {
+        return ResponseEntity.ok(pedidoService.consultarProducto(productoId));
     }
 }

@@ -1,5 +1,6 @@
 package com.tecsup.controller;
 
+import com.tecsup.dto.PedidoDTO;
 import com.tecsup.entity.Cliente;
 import com.tecsup.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,5 +50,10 @@ public class ClienteController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         clienteService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}/pedidos")
+    public ResponseEntity<List<PedidoDTO>> obtenerPedidos(@PathVariable Long id) {
+        return ResponseEntity.ok(clienteService.obtenerPedidosDeCliente(id));
     }
 }
