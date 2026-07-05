@@ -2,6 +2,7 @@ package com.tecsup.services;
 
 import com.tecsup.client.CategoriaClient;
 import com.tecsup.dto.CategoriaDTO;
+import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ public class CategoriaClientWrapper {
     @Autowired
     private CategoriaClient categoriaClient;
 
+    @Bulkhead(name = "categoriaBulkhead", fallbackMethod = "categoriaFallback")
     @Retry(name = "categoriaRetry", fallbackMethod = "categoriaFallback")
     @CircuitBreaker(name = "categoriaService")
     public CategoriaDTO obtenerCategoriaConFallback(Long categoriaId) {

@@ -35,7 +35,10 @@ public class CategoriaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> obtener(@PathVariable Long id) {
+    public ResponseEntity<?> obtener(@PathVariable Long id) throws InterruptedException {
+        // Simular que el servicio tarda 10 segundos (para prueba de Bulkhead)
+        Thread.sleep(10000);
+
         Categoria c = service.obtener(id);
         if (c == null) {
             return ResponseEntity.notFound().build();
