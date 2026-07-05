@@ -1,5 +1,6 @@
 package com.tecsup.service;
 
+import com.tecsup.dto.ClienteDTO;
 import com.tecsup.dto.ProductoDTO;
 import com.tecsup.entity.Pedido;
 
@@ -18,4 +19,6 @@ public interface PedidoService {
     void delete(Long id);
 
     ProductoDTO consultarProducto(Long productoId);
+
+    ClienteDTO consultarCliente(Long clienteId);
 }

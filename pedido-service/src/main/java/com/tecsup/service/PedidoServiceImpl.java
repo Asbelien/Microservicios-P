@@ -1,5 +1,6 @@
 package com.tecsup.service;
 
+import com.tecsup.dto.ClienteDTO;
 import com.tecsup.dto.ProductoDTO;
 import com.tecsup.entity.Pedido;
 import com.tecsup.repository.PedidoRepository;
@@ -16,6 +17,9 @@ public class PedidoServiceImpl implements PedidoService {
 
     @Autowired
     private ProductoClientWrapper productoClientWrapper;
+
+    @Autowired
+    private ClienteClientWrapper clienteClientWrapper;
 
     @Override
     public List<Pedido> findAll() {
@@ -52,5 +56,9 @@ public class PedidoServiceImpl implements PedidoService {
 
     public ProductoDTO consultarProducto(Long productoId) {
         return productoClientWrapper.obtenerProductoConFallback(productoId);
+    }
+
+    public ClienteDTO consultarCliente(Long clienteId) {
+        return clienteClientWrapper.obtenerClienteConFallback(clienteId);
     }
 }

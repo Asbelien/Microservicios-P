@@ -1,5 +1,6 @@
 package com.tecsup.controller;
 
+import com.tecsup.dto.ClienteDTO;
 import com.tecsup.dto.ProductoDTO;
 import com.tecsup.entity.Pedido;
 import com.tecsup.service.PedidoService;
@@ -55,5 +56,10 @@ public class PedidoController {
     @GetMapping("/producto/{productoId}")
     public ResponseEntity<ProductoDTO> consultarProducto(@PathVariable Long productoId) {
         return ResponseEntity.ok(pedidoService.consultarProducto(productoId));
+    }
+
+    @GetMapping("/cliente/{clienteId}")
+    public ResponseEntity<ClienteDTO> consultarCliente(@PathVariable Long clienteId) {
+        return ResponseEntity.ok(pedidoService.consultarCliente(clienteId));
     }
 }
