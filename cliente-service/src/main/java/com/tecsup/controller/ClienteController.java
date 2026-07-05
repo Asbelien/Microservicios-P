@@ -23,7 +23,10 @@ public class ClienteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Cliente> findById(@PathVariable Long id) {
+    public ResponseEntity<Cliente> findById(@PathVariable Long id) throws InterruptedException {
+        // Simular que el servicio tarda 5 segundos (para prueba de Retry)
+        Thread.sleep(5000);
+
         Cliente cliente = clienteService.findById(id);
         if (cliente == null) {
             return ResponseEntity.notFound().build();

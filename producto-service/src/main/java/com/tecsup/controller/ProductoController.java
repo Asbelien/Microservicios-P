@@ -27,7 +27,10 @@ public class ProductoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Producto> obtener(@PathVariable Long id) {
+    public ResponseEntity<Producto> obtener(@PathVariable Long id) throws InterruptedException {
+        // Simular que el servicio tarda 10 segundos (para prueba de Bulkhead)
+        Thread.sleep(10000);
+
         Producto p = service.obtener(id);
         if (p == null) {
             return ResponseEntity.notFound().build();
@@ -59,4 +62,3 @@ public class ProductoController {
         return ResponseEntity.noContent().build();
     }
 }
-
