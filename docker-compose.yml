@@ -79,6 +79,10 @@ services:
       - mysql-categoria
       - config-server
       - eureka-server
+    environment:
+      SPRING_CONFIG_IMPORT: "optional:configserver:http://config-server:8888"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-categoria:3306/bd_categoria_dev"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-server:8761/eureka"
     ports:
       - "8082:8082"
 
@@ -91,6 +95,10 @@ services:
       - mysql-producto
       - config-server
       - eureka-server
+    environment:
+      SPRING_CONFIG_IMPORT: "optional:configserver:http://config-server:8888"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-producto:3306/bd_producto_dev"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-server:8761/eureka"
     ports:
       - "8083:8083"
 
@@ -103,6 +111,10 @@ services:
       - mysql-cliente
       - config-server
       - eureka-server
+    environment:
+      SPRING_CONFIG_IMPORT: "optional:configserver:http://config-server:8888"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-cliente:3306/clientes_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=America/Lima"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-server:8761/eureka"
     ports:
       - "8084:8084"
 
@@ -115,5 +127,9 @@ services:
       - mysql-pedido
       - config-server
       - eureka-server
+    environment:
+      SPRING_CONFIG_IMPORT: "optional:configserver:http://config-server:8888"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-pedido:3306/pedidos_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=America/Lima"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-server:8761/eureka"
     ports:
       - "8085:8085"
