@@ -80,8 +80,10 @@ services:
       - config-server
       - eureka-server
     environment:
-      SPRING_CONFIG_IMPORT: "optional:configserver:http://config-server:8888"
+      SPRING_CONFIG_IMPORT: "configserver:http://config-server:8888"
       SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-categoria:3306/bd_categoria_dev"
+      SPRING_DATASOURCE_USERNAME: "root"
+      SPRING_DATASOURCE_PASSWORD: "root"
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-server:8761/eureka"
     ports:
       - "8082:8082"
@@ -96,8 +98,10 @@ services:
       - config-server
       - eureka-server
     environment:
-      SPRING_CONFIG_IMPORT: "optional:configserver:http://config-server:8888"
+      SPRING_CONFIG_IMPORT: "configserver:http://config-server:8888"
       SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-producto:3306/bd_producto_dev"
+      SPRING_DATASOURCE_USERNAME: "root"
+      SPRING_DATASOURCE_PASSWORD: "root"
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-server:8761/eureka"
     ports:
       - "8083:8083"
@@ -112,8 +116,10 @@ services:
       - config-server
       - eureka-server
     environment:
-      SPRING_CONFIG_IMPORT: "optional:configserver:http://config-server:8888"
+      SPRING_CONFIG_IMPORT: "configserver:http://config-server:8888"
       SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-cliente:3306/clientes_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=America/Lima"
+      SPRING_DATASOURCE_USERNAME: "root"
+      SPRING_DATASOURCE_PASSWORD: "root"
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-server:8761/eureka"
     ports:
       - "8084:8084"
@@ -128,8 +134,10 @@ services:
       - config-server
       - eureka-server
     environment:
-      SPRING_CONFIG_IMPORT: "optional:configserver:http://config-server:8888"
+      SPRING_CONFIG_IMPORT: "configserver:http://config-server:8888"
       SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-pedido:3306/pedidos_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=America/Lima"
+      SPRING_DATASOURCE_USERNAME: "root"
+      SPRING_DATASOURCE_PASSWORD: "root"
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-server:8761/eureka"
     ports:
       - "8085:8085"
