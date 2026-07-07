@@ -46,7 +46,7 @@ public class ProductoController {
         }
         existente.setNombre(p.getNombre());
         existente.setPrecio(p.getPrecio());
-        existente.setStock(p.getStock());
+        existente.setDuracionMinutos(p.getDuracionMinutos());
         existente.setCategoriaId(p.getCategoriaId());
 
         return ResponseEntity.ok(service.guardar(existente));

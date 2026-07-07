@@ -5,7 +5,7 @@ public class ProductoDTO {
     private Long id;
     private String nombre;
     private Double precio;
-    private Integer stock;
+    private Integer duracionMinutos;
 
     public ProductoDTO() {
     }
@@ -34,11 +34,11 @@ public class ProductoDTO {
         this.precio = precio;
     }
 
-    public Integer getStock() {
-        return stock;
+    public Integer getDuracionMinutos() {
+        return duracionMinutos;
     }
 
-    public void setStock(Integer stock) {
-        this.stock = stock;
+    public void setDuracionMinutos(Integer duracionMinutos) {
+        this.duracionMinutos = duracionMinutos;
     }
 }

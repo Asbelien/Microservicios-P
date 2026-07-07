@@ -44,8 +44,10 @@ public class PedidoServiceImpl implements PedidoService {
         }
         existente.setClienteId(pedido.getClienteId());
         existente.setFecha(pedido.getFecha());
+        existente.setHora(pedido.getHora());
         existente.setTotal(pedido.getTotal());
         existente.setEstado(pedido.getEstado());
+        existente.setProductoId(pedido.getProductoId());
         return pedidoRepository.save(existente);
     }
 

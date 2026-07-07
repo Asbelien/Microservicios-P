@@ -26,9 +26,9 @@ public class ProductoClientWrapper {
         System.out.println("Fallback ejecutado");
         ProductoDTO fallback = new ProductoDTO();
         fallback.setId(id);
-        fallback.setNombre("Producto no disponible");
+        fallback.setNombre("Servicio no disponible");
         fallback.setPrecio(0.0);
-        fallback.setStock(0);
+        fallback.setDuracionMinutos(0);
         return fallback;
     }
 }
