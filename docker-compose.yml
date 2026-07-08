@@ -2,50 +2,40 @@ version: "3.9"
 
 services:
 
-  mysql-categoria:
-    image: mysql:8.0
-    container_name: mysql-categoria
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: bd_categoria_dev
-    ports:
-      - "3307:3306"
-
-  mysql-producto:
-    image: mysql:8.0
-    container_name: mysql-producto
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: bd_producto_dev
-    ports:
-      - "3308:3306"
-
   mysql-cliente:
     image: mysql:8.0
-    container_name: mysql-cliente
+    container_name: mysql-cliente-reservas
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: clientes_db
+      MYSQL_DATABASE: bd_reservas_cliente
     ports:
-      - "3309:3306"
+      - "3311:3306"
 
-  mysql-pedido:
+  mysql-servicio:
     image: mysql:8.0
-    container_name: mysql-pedido
+    container_name: mysql-servicio-reservas
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: pedidos_db
+      MYSQL_DATABASE: bd_reservas_servicio
     ports:
-      - "3310:3306"
+      - "3312:3306"
+
+  mysql-reserva:
+    image: mysql:8.0
+    container_name: mysql-reserva-reservas
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: bd_reservas_reserva
+    ports:
+      - "3313:3306"
 
   config-server:
     build:
       context: ./config-server
-    container_name: config-server
+    container_name: config-server-reservas
     restart: always
     ports:
       - "8888:8888"
@@ -53,63 +43,29 @@ services:
   eureka-server:
     build:
       context: ./eureka-server
-    container_name: eureka-server
+    container_name: eureka-server-reservas
     restart: always
     depends_on:
       - config-server
     ports:
       - "8761:8761"
 
-  gateway-service:
+  api-gateway:
     build:
-      context: ./gateway-service
-    container_name: gateway-service
+      context: ./api-gateway
+    container_name: api-gateway-reservas
     restart: always
     depends_on:
       - eureka-server
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-server:8761/eureka"
     ports:
       - "8080:8080"
-
-  categoria-service:
-    build:
-      context: ./categoria-service
-    container_name: categoria-service
-    restart: always
-    depends_on:
-      - mysql-categoria
-      - config-server
-      - eureka-server
-    environment:
-      SPRING_CONFIG_IMPORT: "configserver:http://config-server:8888"
-      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-categoria:3306/bd_categoria_dev"
-      SPRING_DATASOURCE_USERNAME: "root"
-      SPRING_DATASOURCE_PASSWORD: "root"
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-server:8761/eureka"
-    ports:
-      - "8082:8082"
-
-  producto-service:
-    build:
-      context: ./producto-service
-    container_name: producto-service
-    restart: always
-    depends_on:
-      - mysql-producto
-      - config-server
-      - eureka-server
-    environment:
-      SPRING_CONFIG_IMPORT: "configserver:http://config-server:8888"
-      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-producto:3306/bd_producto_dev"
-      SPRING_DATASOURCE_USERNAME: "root"
-      SPRING_DATASOURCE_PASSWORD: "root"
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-server:8761/eureka"
-    ports:
-      - "8083:8083"
 
   cliente-service:
     build:
       context: ./cliente-service
-    container_name: cliente-service
+    container_name: cliente-service-reservas
     restart: always
     depends_on:
       - mysql-cliente
@@ -117,27 +73,47 @@ services:
       - eureka-server
     environment:
       SPRING_CONFIG_IMPORT: "configserver:http://config-server:8888"
-      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-cliente:3306/clientes_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=America/Lima"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-cliente:3306/bd_reservas_cliente?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=America/Lima"
       SPRING_DATASOURCE_USERNAME: "root"
       SPRING_DATASOURCE_PASSWORD: "root"
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-server:8761/eureka"
     ports:
-      - "8084:8084"
+      - "8081:8081"
 
-  pedido-service:
+  servicio-service:
     build:
-      context: ./pedido-service
-    container_name: pedido-service
+      context: ./servicio-service
+    container_name: servicio-service-reservas
     restart: always
     depends_on:
-      - mysql-pedido
+      - mysql-servicio
       - config-server
       - eureka-server
     environment:
       SPRING_CONFIG_IMPORT: "configserver:http://config-server:8888"
-      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-pedido:3306/pedidos_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=America/Lima"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-servicio:3306/bd_reservas_servicio?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=America/Lima"
       SPRING_DATASOURCE_USERNAME: "root"
       SPRING_DATASOURCE_PASSWORD: "root"
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-server:8761/eureka"
     ports:
-      - "8085:8085"
+      - "8082:8082"
+
+  reserva-service:
+    build:
+      context: ./reserva-service
+    container_name: reserva-service-reservas
+    restart: always
+    depends_on:
+      - mysql-reserva
+      - config-server
+      - eureka-server
+      - cliente-service
+      - servicio-service
+    environment:
+      SPRING_CONFIG_IMPORT: "configserver:http://config-server:8888"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-reserva:3306/bd_reservas_reserva?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=America/Lima"
+      SPRING_DATASOURCE_USERNAME: "root"
+      SPRING_DATASOURCE_PASSWORD: "root"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-server:8761/eureka"
+    ports:
+      - "8083:8083"

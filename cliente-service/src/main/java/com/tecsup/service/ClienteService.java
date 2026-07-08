@@ -1,21 +1,47 @@
 package com.tecsup.service;
 
-import com.tecsup.dto.PedidoDTO;
-import com.tecsup.entity.Cliente;
+import com.tecsup.model.Cliente;
+import com.tecsup.repository.ClienteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public interface ClienteService {
+@Service
+public class ClienteService {
 
-    List<Cliente> findAll();
+    @Autowired
+    private ClienteRepository repository;
 
-    Cliente findById(Long id);
+    public List<Cliente> listar() {
+        return repository.findAll();
+    }
 
-    Cliente save(Cliente cliente);
+    public Cliente obtener(Long id) {
+        return repository.findById(id).orElse(null);
+    }
 
-    Cliente update(Long id, Cliente cliente);
+    public Cliente guardar(Cliente cliente) {
+        return repository.save(cliente);
+    }
 
-    void delete(Long id);
+    public Cliente actualizar(Long id, Cliente cliente) {
+        Cliente existente = repository.findById(id).orElse(null);
+        if (existente == null) {
+            return null;
+        }
+        existente.setNombre(cliente.getNombre());
+        existente.setApellido(cliente.getApellido());
+        existente.setEmail(cliente.getEmail());
+        existente.setTelefono(cliente.getTelefono());
+        return repository.save(existente);
+    }
 
-    List<PedidoDTO> obtenerPedidosDeCliente(Long clienteId);
+    public boolean eliminar(Long id) {
+        if (!repository.existsById(id)) {
+            return false;
+        }
+        repository.deleteById(id);
+        return true;
+    }
 }
